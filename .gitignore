@@ -1,0 +1,46 @@
+# ===========================
+# Java / Spring Boot
+# ===========================
+backend/target/
+backend/.mvn/
+backend/*.jar
+backend/*.war
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.idea/
+backend/*.iml
+
+# ===========================
+# React / Node
+# ===========================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# ===========================
+# Environment variables
+# ===========================
+.env
+.env.dev
+.env.staging
+.env.prod
+
+# ===========================
+# Docker
+# ===========================
+docker-compose.override.yml
+
+# ===========================
+# OS files
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# IDE
+# ===========================
+.idea/
+*.iml
+.vscode/settings.json
