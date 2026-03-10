@@ -1,15 +1,23 @@
 package com.renovation.tracker.entity;
 
+import com.renovation.tracker.entity.enums.ExpenseStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "expenses")
+@NoArgsConstructor
 public class Expense {
+
+    public Expense(Long id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +29,8 @@ public class Expense {
     @Column(nullable = false)
     private BigDecimal totalAmount;
 
-    @Column
-    private BigDecimal firstInstallment;
-
-    @Column(nullable = false)
-    private boolean paidInFull;
-
     @Column(nullable = false)
     private LocalDate expenseDate;
-
-    @Column(nullable = false)
-    private LocalDate paymentDate;
 
     @Column(nullable = false)
     private LocalDate serviceDeliveryDate;
@@ -39,11 +38,22 @@ public class Expense {
     @Column(name = "invoice_image_url", length = 500)
     private String invoiceImageUrl;
 
-    @JoinColumn
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ExpenseStatus status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "expense_type_id", nullable = false)
     private ExpenseType expenseType;
 
-    @JoinColumn
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sponsor_id", nullable = false)
     private Sponsor sponsor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "renovation_id", nullable = false)
+    private Renovation renovation;
+
+    @OneToMany(mappedBy = "expense")
+    private List<Payment> payments;
 }
